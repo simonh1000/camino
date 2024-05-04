@@ -18,6 +18,10 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
+## Change Log
+
+-   0.1.0 add coloured icons
+
 ## Dependencies
 
 ### rmx-remix
