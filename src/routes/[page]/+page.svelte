@@ -18,11 +18,11 @@
             if (wc) {
                 // @ts-ignore
                 wc.addRemixEventListener("remix/first-view", () => {
-                    // console.log("**first view**");
+                    console.log("**first view**");
                     loaded = true;
                 });
             }
-        }, 1);
+        }, 100);
     });
     // let ampPrefix = "https://remix-dev.remixlabs.com/a/"
     // let ampPrefix = "http://localhost:8000/";
