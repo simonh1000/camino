@@ -10,7 +10,17 @@
     } else {
         token = getAnonToken();
     }
-
+    token.then(() => {
+        setTimeout(() => {
+            const wc = document.querySelector("rmx-remix");
+            if (wc) {
+                // @ts-ignore
+                wc.addRemixEventListener("remix/first-view", () =>
+                    console.log("**first view**"),
+                );
+            }
+        }, 1);
+    });
     // let ampPrefix = "https://remix-dev.remixlabs.com/a/"
     // let ampPrefix = "http://localhost:8000/";
     let authPrefix = "https://auth.remixlabs.com/a";
@@ -22,7 +32,7 @@
     function del() {
         console.log("Attempting to delete");
         // Let us open our database
-        const dbVersion = 2;
+        const dbVersion = 3;
         const request = indexedDB.open(dbName, dbVersion);
         // var deleteRequest = indexedDB.deleteDatabase(dbName);
         // deleteRequest.onsuccess = (evt) => {
@@ -54,22 +64,25 @@
 
 <div class="container">
     {#await token}
-        "Loading"
+        "Loading...."
     {:then t}
         <rmx-remix
             amp-prefix={authPrefix}
             token={t}
             screen-name={data.page}
-            src="/camino.remix?v1"
+            src="/camino.remix?v2"
             rmx-uid="svelte"
         ></rmx-remix>
     {/await}
-    <button onclick={del}>Delete</button>
+    <button class="delete-button" onclick={del}>Delete Cache</button>
 </div>
 
 <style>
     .container {
         max-width: 500px;
         margin: 0 auto;
+    }
+    .delete-button {
+        margin-top: 50px;
     }
 </style>
