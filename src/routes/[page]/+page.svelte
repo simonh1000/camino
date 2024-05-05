@@ -1,10 +1,12 @@
 <script lang="ts">
-    import { WHERE } from "$lib";
+    import { WHERE, delDbCache } from "$lib";
     import { getAnonToken, handleAuth } from "$lib/auth";
     import type { PageData } from "./$types";
 
     export let data: PageData;
     let token: Promise<string>;
+    let loaded = false;
+
     if (data.page != WHERE) {
         token = Promise.resolve(handleAuth());
     } else {
@@ -15,74 +17,69 @@
             const wc = document.querySelector("rmx-remix");
             if (wc) {
                 // @ts-ignore
-                wc.addRemixEventListener("remix/first-view", () =>
-                    console.log("**first view**"),
-                );
+                wc.addRemixEventListener("remix/first-view", () => {
+                    // console.log("**first view**");
+                    loaded = true;
+                });
             }
         }, 1);
     });
     // let ampPrefix = "https://remix-dev.remixlabs.com/a/"
     // let ampPrefix = "http://localhost:8000/";
     let authPrefix = "https://auth.remixlabs.com/a";
-
-    const dbName = "keyval-store";
-    const objStoreName = "keyval";
-    const key = "/camino.remix";
-
-    function del() {
-        console.log("Attempting to delete");
-        // Let us open our database
-        const dbVersion = 3;
-        const request = indexedDB.open(dbName, dbVersion);
-        // var deleteRequest = indexedDB.deleteDatabase(dbName);
-        // deleteRequest.onsuccess = (evt) => {
-        //     console.log("deleted", evt);
-        // };
-        // deleteRequest.onerror = (evt) => {
-        //     console.error("delete", evt);
-        // };
-
-        request.onsuccess = (evt) => {
-            const db = request.result;
-            console.log("onsuccess", evt, db);
-        };
-        request.onupgradeneeded = (evt: any) => {
-            const db = evt.target.result;
-            console.log("onupgradeneeded", evt, db);
-            // const transaction = db.transaction([objStoreName], "readwrite");
-
-            db.deleteObjectStore(objStoreName);
-            // transaction.oncomplete = () => {
-            //     console.log("complete");
-            // };
-        };
-        request.onerror = (evt) => {
-            console.error(evt, request);
-        };
-    }
 </script>
 
 <div class="container">
+    <div class={loaded ? "hide" : "loading"}>
+        <img src="/loading.jpg" alt="" />
+    </div>
     {#await token}
         "Loading...."
     {:then t}
         <rmx-remix
+            class={loaded ? "show" : ""}
             amp-prefix={authPrefix}
             token={t}
             screen-name={data.page}
-            src="/camino.remix?v3"
+            src="/camino.remix?v4"
             rmx-uid="svelte"
         ></rmx-remix>
     {/await}
-    <button class="delete-button" onclick={del}>Delete Cache</button>
+    <footer class="footer">
+        <button class="delete-button" onclick={delDbCache}>Delete Cache</button>
+    </footer>
 </div>
 
 <style>
     .container {
+        height: 100vh;
         max-width: 500px;
         margin: 0 auto;
+        display: flex;
+        flex-direction: column;
     }
-    .delete-button {
-        margin-top: 50px;
+    .loading {
+        padding-top: 60px;
+        overflow: hidden;
+        img {
+            height: 100%;
+            margin-left: -50%;
+        }
+    }
+    .hide {
+        display: none;
+    }
+    rmx-remix {
+        height: 0px;
+    }
+    rmx-remix.show {
+        flex-grow: 1;
+        height: auto;
+    }
+    footer {
+        height: 100px;
+        overflow: hidden;
+        flex-shrink: 0;
+        flex-grow: 0;
     }
 </style>
