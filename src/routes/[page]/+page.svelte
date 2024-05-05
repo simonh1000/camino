@@ -60,7 +60,7 @@
             amp-prefix={authPrefix}
             token={t}
             screen-name={data.page}
-            src="/camino.remix"
+            src="/camino.remix?v1"
             rmx-uid="svelte"
         ></rmx-remix>
     {/await}
