@@ -24,8 +24,7 @@
             }
         }, 100);
     });
-    // let ampPrefix = "https://remix-dev.remixlabs.com/a/"
-    // let ampPrefix = "http://localhost:8000/";
+    // let authPrefix = "http://localhost:8000/";
     let authPrefix = "https://auth.remixlabs.com/a";
 </script>
 
@@ -38,7 +37,7 @@
     {:then t}
         <rmx-remix
             class={loaded ? "show" : ""}
-            amp-prefix={authPrefix}
+            auth-prefix={authPrefix}
             token={t}
             screen-name={data.page}
             src="/camino.remix"
@@ -59,10 +58,10 @@
         flex-direction: column;
     }
     .loading {
-        padding-top: 60px;
+        /* padding-top: 60px; */
         overflow: hidden;
         img {
-            height: 100%;
+            width: 100%;
             /* margin-left: -50%; */
         }
     }
