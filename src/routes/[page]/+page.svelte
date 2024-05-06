@@ -41,7 +41,7 @@
             amp-prefix={authPrefix}
             token={t}
             screen-name={data.page}
-            src="/camino.remix?v4"
+            src="/camino.remix"
             rmx-uid="svelte"
         ></rmx-remix>
     {/await}
@@ -63,7 +63,7 @@
         overflow: hidden;
         img {
             height: 100%;
-            margin-left: -50%;
+            /* margin-left: -50%; */
         }
     }
     .hide {
