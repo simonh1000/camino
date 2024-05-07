@@ -30,6 +30,15 @@
     let authPrefix = "https://auth.remixlabs.com/a";
 </script>
 
+<svelte:head>
+    <meta property="og:title" content="Our Camino" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://our-camino.netlify.app/" />
+    <meta
+        property="og:image"
+        content="https://our-camino.netlify.app/icon.png"
+    />
+</svelte:head>
 <div class="container">
     <div class={loaded ? "hide" : "loading"}>
         <img src="/loading.jpg" alt="" />
