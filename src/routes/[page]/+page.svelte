@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { WHERE, delDbCache } from "$lib";
-    import { getAnonToken, handleAuth } from "$lib/auth";
     import type { PageData } from "./$types";
+
+    import { WHERE } from "$lib";
+    import { getAnonToken, handleAuth } from "$lib/auth";
 
     export let data: PageData;
     let token: Promise<string>;
@@ -10,6 +11,7 @@
     if (data.page != WHERE) {
         token = Promise.resolve(handleAuth());
     } else {
+        // we wont't need this if RmxBase does it
         token = getAnonToken();
     }
     token.then(() => {
@@ -33,10 +35,13 @@
         <img src="/loading.jpg" alt="" />
     </div>
     {#await token}
-        "Loading...."
+        <div class="overlay">Loading....</div>
     {:then t}
+        {#if !loaded}
+            <div class="overlay">Loading....</div>
+        {/if}
         <rmx-remix
-            class={loaded ? "show" : ""}
+            class={"webcomp" + loaded ? " show" : ""}
             auth-prefix={authPrefix}
             token={t}
             screen-name={data.page}
@@ -44,9 +49,6 @@
             rmx-uid="svelte"
         ></rmx-remix>
     {/await}
-    <footer class="footer">
-        <button class="delete-button" onclick={delDbCache}>Delete Cache</button>
-    </footer>
 </div>
 
 <style>
@@ -56,6 +58,7 @@
         margin: 0 auto;
         display: flex;
         flex-direction: column;
+        position: relative;
     }
     .loading {
         /* padding-top: 60px; */
@@ -65,13 +68,24 @@
             /* margin-left: -50%; */
         }
     }
+    .overlay {
+        font-size: 40px;
+        position: absolute;
+        top: 50px;
+        text-align: center;
+        left: 0;
+        right: 0;
+        color: white;
+        background-color: #000000cc;
+    }
     .hide {
         display: none;
     }
-    rmx-remix {
+    .webcomp {
         height: 0px;
+        overflow: hidden;
     }
-    rmx-remix.show {
+    .webcomp.show {
         flex-grow: 1;
         height: auto;
     }
