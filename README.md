@@ -59,11 +59,19 @@ curl -X POST \
   --output "static/camino.remix" \
   "$AMP_URL/x/apps/export?includeDebug=true"
 
-# 2) run permission for anon
+# 2) run permission for anon for get
 curl  -X POST \
   -H "Authorization: Bearer $TOKEN_REMIX_DEV" \
   -F subject=user/_rmx_anon_user \
   -F resource=agent/camino/get_all \
+  -F role=runner \
+  "$CLOUD_URL/grant-permission/simon"
+
+# 3) run permission for anon for PATCH
+curl  -X POST \
+  -H "Authorization: Bearer $TOKEN_REMIX_DEV" \
+  -F subject=user/_rmx_anon_user \
+  -F resource=agent/camino/patch \
   -F role=runner \
   "$CLOUD_URL/grant-permission/simon"
 ```
