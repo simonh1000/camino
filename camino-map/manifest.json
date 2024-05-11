@@ -1,0 +1,21 @@
+{
+    "mix_package_version": "1",
+    "mix_package_type": "webcomponent",
+    "file": "rmx-map-icon.js",
+    "tag": "rmx-map-icon",
+    "version": "2.0.0",
+    "icon": "map",
+    "description": "Simple Google Map with markers",
+    "annotation": "markers are `List of {position: {lat:39.472,lng:-0.364}, options: {pin options}, meta: \"itemX\"}`",
+    "module": true,
+    "ins": [
+        { "name": "api-key", "type": "string" },
+        { "name": "zoom", "type": "number" },
+        { "name": "center", "type": "location" },
+        { "name": "map-options", "type": {} },
+        { "name": "markers", "type": [{}] },
+        { "name": "count", "type": "number" }
+    ],
+    "events": [{ "name": "marker-clicked", "payload": {} }],
+    "slots": {}
+}

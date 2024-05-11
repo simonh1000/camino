@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>rmx-map-icon test harness</title>
+        <!-- dev ts entry (comment out when using prod entry (npm run watch)) -->
+        <script type="module" src="./src/rmx-map-icon.js"></script>
+        <!-- production js entry (comment out when using dev entry) -->
+        <!--        <script src="./dist/rmx-map-icon.js"></script>-->
+        <style>
+            rmx-map-icon {
+                display: block;
+                width: 500px;
+                height: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <rmx-map-icon
+            api-key="%VITE_GAPI_KEY%"
+            center='{"lat":39.47228,"lng":-0.364284}'
+            zoom="14"
+            count="2"
+        ></rmx-map-icon>
+        <button id="test" test>Add markers</button>
+
+        <script>
+            const map = document.querySelector("rmx-map-icon");
+            let markers = [
+                {
+                    meta: "centre",
+                    position: { lat: 39.472, lng: -0.364 },
+                    options: {
+                        background: "#137333",
+                        borderColor: "#137333",
+                        glyphColor: "white",
+                    },
+                },
+                {
+                    meta: "marker2",
+                    position: { lat: 39.576, lng: -0.364 },
+                    options: {
+                        background: "#137333",
+                        borderColor: "#137333",
+                        glyphColor: "white",
+                    },
+                },
+                {
+                    meta: "marker3",
+                    position: { lat: 39.682, lng: -0.364 },
+                    options: {
+                        background: "#137333",
+                        borderColor: "#137333",
+                        glyphColor: "white",
+                    },
+                },
+            ];
+            map.setAttribute("markers", JSON.stringify(markers));
+
+            map.addEventListener("marker-clicked", (evt) =>
+                console.log(evt.detail)
+            );
+
+            document.querySelector("#test").addEventListener("click", () => {
+                map.setAttribute("markers", JSON.stringify(markers));
+                // map.setAttribute(
+                //     "center",
+                //     JSON.stringify({ lat: 50.85045, lng: 4.34878 })
+                // );
+                // map.setAttribute("zoom", JSON.stringify(11));
+            });
+            // map.addEventListener("boundsChanged", (evt) =>
+            //     console.log(evt.detail)
+            // );
+        </script>
+    </body>
+</html>
