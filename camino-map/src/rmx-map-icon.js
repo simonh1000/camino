@@ -185,6 +185,7 @@ class MapIcon extends HTMLElement {
     }
 
     fitMap() {
+        // show only some of the icons so as to get a higher zoom level and with more space between
         let ct = JSON.parse(this.getAttribute("count")) || 0;
 
         let markers = ct == 0 ? this.markers : this.markers.slice(0, ct);
