@@ -1,11 +1,13 @@
 // place files you want to import through the `$lib` alias in this folder.
 
 export const WHERE = "wherearewe";
+export const PILGRIMS = "pilgrims";
 
 const dbName = "keyval-store";
 const objStoreName = "keyval";
 const key = "/camino.remix";
 
+// Think this was a for a bug that meant that the app did not update properly
 export function delDbCache() {
     console.log("Attempting to delete");
     // Let us open our database
