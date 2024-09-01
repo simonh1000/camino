@@ -13,20 +13,23 @@
     const remixFileURL = "/camino.remix";
 
     if (data.page != WHERE) {
-        // on where is anonymous
+        // not on the public page, so need a user token
         token = Promise.resolve(handleAuth());
     } else {
-        // we wont't need this if RmxBase does it
+        // i.e we are on /wherearwe and only need anon token
         token = getAnonToken();
     }
     token.then((t) => {
         setTimeout(() => {
+            // new loading process.
+            // Load webcomp and listen for completed event
+            // load .remix and await mixcoreFlags
             const rmxRuntime = document.querySelector("rmx-runtime");
             if (rmxRuntime) {
                 let webcomp = new Promise((resolve, reject) => {
                     rmxRuntime.addEventListener("remix/ready", () => {
                         loaded = true;
-                        console.log("received remix/ready");
+                        // console.log("received remix/ready");
                         return resolve(null);
                     });
                 });
