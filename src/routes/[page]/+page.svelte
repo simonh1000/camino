@@ -100,6 +100,7 @@
     .hide {
         display: none;
     }
+    /* these styles are usd dynamically */
     .webcomp {
         height: 0px;
         overflow: hidden;
@@ -107,11 +108,5 @@
     .webcomp.show {
         flex-grow: 1;
         height: auto;
-    }
-    footer {
-        height: 100px;
-        overflow: hidden;
-        flex-shrink: 0;
-        flex-grow: 0;
     }
 </style>
