@@ -49,7 +49,7 @@ CLOUD_URL=http://127.0.0.1:8080/
 AMP_URL=https://remix-dev.remixlabs.com/a
 CLOUD_URL=https://agt-dev.remixlabs.com
 WS="simon"
-DB="bd-camino"
+DB="camino"
 ```
 
 # 0) Check what workspaces exist
@@ -71,9 +71,11 @@ use a .remix file!
 
 # 1) EXPORT a .remix file of the agents
 
+TODO relace line 77 with $DB/$WS
+
 ```
 curl -X POST \
-  -d '{"apps": {"$DB": true}, "records": {}, "metadata": {"test": "$WS"}}' \
+  -d '{"apps": {"camino": true}, "records": {}, "metadata": {"test": "simon"}}' \
   -H "content-type: text/plain;charset=UTF-8" \
   -H "Authorization: Bearer $TOKEN_REMIX_DEV" \
   --output "static/camino.remix" \
