@@ -1,33 +1,51 @@
 <script lang="ts">
     import type { PageData } from "./$types";
 
+    import { init } from "$lib/remix-file-loader.js";
     import { WHERE } from "$lib";
     import { getAnonToken, handleAuth } from "$lib/auth";
 
     export let data: PageData;
     let token: Promise<string>;
     let loaded = false;
+    const mixcoreWasmUrl = "https://dev.remix.app/js/mixcore.wasm";
+    let authPrefix = "https://auth.remixlabs.com/a";
+    const remixFileURL = "/camino.remix";
 
     if (data.page != WHERE) {
+        // not on the public page, so need a user token
         token = Promise.resolve(handleAuth());
     } else {
-        // we wont't need this if RmxBase does it
+        // i.e we are on /wherearwe and only need anon token
         token = getAnonToken();
     }
-    token.then(() => {
+    token.then((t) => {
         setTimeout(() => {
-            const wc = document.querySelector("rmx-remix");
-            if (wc) {
-                // @ts-ignore
-                wc.addRemixEventListener("remix/first-view", () => {
-                    console.log("**first view**");
-                    loaded = true;
+            // new loading process.
+            // Load webcomp and listen for completed event
+            // load .remix and await mixcoreFlags
+            const rmxRuntime = document.querySelector("rmx-runtime");
+            if (rmxRuntime) {
+                let webcomp = new Promise((resolve, reject) => {
+                    rmxRuntime.addEventListener("remix/ready", () => {
+                        loaded = true;
+                        // console.log("received remix/ready");
+                        return resolve(null);
+                    });
                 });
-            }
-        }, 100);
+
+                Promise.all([init(remixFileURL, mixcoreWasmUrl), webcomp]).then(
+                    (res) => {
+                        // @ts-ignore
+                        rmxRuntime.attachAsyncData({
+                            ...res[0],
+                            screenName: data.page,
+                        });
+                    },
+                );
+            } else console.error("no rmx-runtime");
+        }, 0);
     });
-    // let authPrefix = "http://localhost:8000/";
-    let authPrefix = "https://auth.remixlabs.com/a";
 </script>
 
 <div class="container">
@@ -40,18 +58,19 @@
         {#if !loaded}
             <div class="overlay">Loading....</div>
         {/if}
-        <rmx-remix
+        <rmx-runtime
             class={"webcomp" + loaded ? " show" : ""}
+            vm-init="client:async"
             auth-prefix={authPrefix}
             token={t}
             screen-name={data.page}
-            src="/camino.remix"
             rmx-uid="svelte"
-        ></rmx-remix>
+            constants={JSON.stringify({ title: "Primitivo" })}
+        ></rmx-runtime>
     {/await}
 </div>
 
-<style>
+<style lang="css">
     .container {
         height: 100vh;
         max-width: 500px;
@@ -63,7 +82,7 @@
     .loading {
         /* padding-top: 60px; */
         overflow: hidden;
-        img {
+        & > img {
             width: 100%;
             /* margin-left: -50%; */
         }
@@ -81,6 +100,7 @@
     .hide {
         display: none;
     }
+    /* these styles are usd dynamically */
     .webcomp {
         height: 0px;
         overflow: hidden;
@@ -88,11 +108,5 @@
     .webcomp.show {
         flex-grow: 1;
         height: auto;
-    }
-    footer {
-        height: 100px;
-        overflow: hidden;
-        flex-shrink: 0;
-        flex-grow: 0;
     }
 </style>
