@@ -36,9 +36,11 @@
 
                 Promise.all([init(remixFileURL, mixcoreWasmUrl), webcomp]).then(
                     (res) => {
-                        // console.log("all", res);
                         // @ts-ignore
-                        rmxRuntime.attachAsyncData(res[0]);
+                        rmxRuntime.attachAsyncData({
+                            ...res[0],
+                            screenName: data.page,
+                        });
                     },
                 );
             } else console.error("no rmx-runtime");
