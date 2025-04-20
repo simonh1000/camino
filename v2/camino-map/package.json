@@ -1,0 +1,24 @@
+{
+  "name": "rmx-map-icon",
+  "version": "2.0.0",
+  "description": "rmx-map-icon web component",
+  "author": "Remix Labs",
+  "main": "src/rmx-map-icon.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "start": "npm run dev --nodebug",
+    "build": "vite build",
+    "watch": "run-p npm-watch dev",
+    "bundle": "npm run build && node bundle.js",
+    "// ALIASES //": "",
+    "npm-watch": "npm-watch"
+  },
+  "watch": {
+    "build": "src/rmx-map-icon.js"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "vite": "^6.2.6"
+  }
+}
