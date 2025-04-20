@@ -4,8 +4,6 @@ There is a a script in flymixer to set permissions on agent
 
 ## Download a .remix file
 
-https://www.notion.so/Studio-Server-Platform-Server-API-1061d464528f80449377e6c07e72b30b?pvs=4#02668d75d6354c58a4874dff2a4bc326
-
 See curls.md
 
 ## Upload
@@ -15,6 +13,12 @@ npx wrangler pages deploy
 ```
 
 ## Admin
+
+(See flymixer/scripts/camino-permissions.js)
+
+At present we use agent run permissions to determine who can run `save` and other agents
+
+An alternative would be to have a permissions record:
 
 ```json
 {
