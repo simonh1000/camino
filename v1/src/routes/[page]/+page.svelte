@@ -20,6 +20,7 @@
         token = getAnonToken();
     }
     token.then((t) => {
+        // todo https://svelte.dev/docs/element-directives#use-action
         setTimeout(() => {
             // new loading process.
             // Load webcomp and listen for completed event
