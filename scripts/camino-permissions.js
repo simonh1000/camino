@@ -7,7 +7,7 @@ In this case, I want to end up with
  - some specific users with general run access, who can thus post and delete
 ************************* */
 
-const AUTH = `Bearer ${process.env.AMP_TOKEN}`;
+const AUTH = `Bearer ${process.env.TOKEN}`;
 const CLOUD_URL = "https://flymixer-broken-moon-4375.fly.dev";
 // const CLOUD_URL = "https://agt-dev.remixlabs.com";
 const WS = "simon";
