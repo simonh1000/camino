@@ -11,7 +11,7 @@ AMP_URL=http://localhost:8000
 AMP_URL=https://remix-dev.remixlabs.com/a
 
 curl -X POST \
-  -d '{"apps": {"camino": true}, "records": {}, "metadata": {"test": "simon"}}' \
+  -d '{"apps": {"camino": true}, "records": {}, "metadata": {}}' \
   -H "content-type: text/plain;charset=UTF-8" \
   -H "Authorization: Bearer $TOKEN" \
   --output "public/camino.remix" \
