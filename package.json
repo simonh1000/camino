@@ -1,15 +1,15 @@
 {
-  "devDependencies": {
-    "zx": "^8.5.3"
-  },
   "name": "camino",
   "version": "1.0.0",
-  "description": "There is a a script in flymixer to set permissions on agent",
+  "description": "Camino support",
+  "author": "Simon Hampton",
+  "license": "ISC",
   "main": "index.js",
   "scripts": {
     "dev": "angular-http-server --path public",
     "get": "zx scripts/get-remix"
   },
-  "author": "",
-  "license": "ISC"
+  "devDependencies": {
+    "zx": "^8.5.3"
+  }
 }

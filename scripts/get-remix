@@ -1,5 +1,7 @@
 #!/usr/bin/env zx
 
+// Downloads the .remix file directory to /public
+
 const AMP_URL = "https://remix-dev.remixlabs.com/a";
 const project = "camino";
 const TOKEN = process.env.TOKEN;
