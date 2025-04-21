@@ -1,0 +1,22 @@
+{
+    "name": "camino",
+    "version": "1.0.0",
+    "description": "Camino support",
+    "author": "Simon Hampton",
+    "license": "ISC",
+    "main": "index.js",
+    "scripts": {
+        "dev": "angular-http-server --path public",
+        "get": "zx scripts/get-remix",
+        "deploy": "wrangler pages deploy"
+    },
+    "devDependencies": {
+        "zx": "^8.5.3"
+    },
+    "dependencies": {
+        "wrangler": "^4.12.0"
+    },
+    "prettier": {
+        "tabWidth": 4
+    }
+}

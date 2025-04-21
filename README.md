@@ -1,8 +1,18 @@
 # Camino
 
-There is a a script in flymixer to set permissions on agent
+An app to support pilgrims
+
+## Dev
+
+```sh
+npm run dev
+```
 
 ## Download a .remix file
+
+```sh
+npm run get
+```
 
 See curls.md
 
@@ -12,9 +22,14 @@ See curls.md
 npx wrangler pages deploy
 ```
 
-## Admin
+## Fly
 
-(See flymixer/scripts/camino-permissions.js)
+```sh
+# set permissions
+node scripts/camino-permissions.js
+```
+
+## Admin
 
 At present we use agent run permissions to determine who can run `save` and other agents
 
