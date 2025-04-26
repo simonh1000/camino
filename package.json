@@ -8,7 +8,7 @@
     "scripts": {
         "dev": "angular-http-server --path public",
         "get": "zx scripts/get-remix",
-        "deploy": "wrangler pages deploy"
+        "deploy": "wrangler pages deploy --preview --branch-name=rc2"
     },
     "devDependencies": {
         "zx": "^8.5.3"
