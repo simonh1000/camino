@@ -8,8 +8,8 @@ In this case, I want to end up with
 ************************* */
 
 const AUTH = `Bearer ${process.env.TOKEN}`;
-// const CLOUD_URL = "https://flymixer-broken-moon-4375.fly.dev";
-const CLOUD_URL = "https://agt-dev.remixlabs.com";
+const CLOUD_URL = "https://flymixer-broken-moon-4375.fly.dev";
+// const CLOUD_URL = "https://agt-dev.remixlabs.com";
 const WS = "simon";
 const APP = "camino";
 
