@@ -13,7 +13,7 @@ const CLOUD_URL = "https://flymixer-broken-moon-4375.fly.dev";
 const WS = "simon";
 const APP = "camino";
 
-// console.log(AUTH);
+// These get DB runner missions
 const runners = [
     "simhampton@gmail.com",
     "hotbelgo@gmail.com",
@@ -21,7 +21,8 @@ const runners = [
 ];
 
 const anonAgents = ["get_posts", "wave"];
-// const adminAgents = ["save", "delete"];
+// how can we limit ....
+const adminAgents = ["save_secret"];
 
 /* ************ Add runner permissions ***************** */
 

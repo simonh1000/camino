@@ -48,3 +48,7 @@ An alternative would be to have a permissions record:
     "editors": ["liesbeth.devriend@gmail.com", "simhampton@gmail.com"]
 }
 ```
+
+## Notes
+
+og:image must be Facebook preview with url and size of large image must be at least 600x315px
