@@ -1,0 +1,70 @@
+#!/usr/bin/env zx
+
+// Downloads the .remix file directory to /public
+
+const AMP_URL = "https://remix-dev.remixlabs.com/a";
+const project = "camino";
+const TOKEN = process.env.TOKEN;
+
+if (!TOKEN) {
+  console.error("Error: TOKEN environment variable must be set");
+  process.exit(1);
+}
+
+const data = {
+  apps: { [project]: true },
+  records: {},
+  metadata: {},
+};
+
+try {
+  const response = await fetch(`${AMP_URL}/x/apps/export`, {
+    method: "POST",
+    headers: {
+      "content-type": "text/plain;charset=UTF-8",
+      Authorization: `Bearer ${TOKEN}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const contentLength = response.headers.get("content-length");
+  let downloadedBytes = 0;
+  let lastProgress = 0;
+  let lastUpdate = Date.now();
+
+  const chunks = [];
+  for await (const chunk of response.body) {
+    chunks.push(chunk);
+    downloadedBytes += chunk.length;
+
+    if (contentLength) {
+      const progress = Math.round((downloadedBytes / contentLength) * 100);
+      if (progress !== lastProgress) {
+        process.stdout.write(`\rDownloading: ${progress}%`);
+        lastProgress = progress;
+      }
+    } else {
+      // Update every 500ms to avoid too many updates
+      const now = Date.now();
+      if (now - lastUpdate >= 500) {
+        process.stdout.write(
+          `\rDownloaded: ${(downloadedBytes / 1024 / 1024).toFixed(2)} MB`
+        );
+        lastUpdate = now;
+      }
+    }
+  }
+  process.stdout.write("\n");
+
+  const buffer = Buffer.concat(chunks);
+  await fs.writeFile(`public/${project}.remix`, buffer);
+
+  console.log(`Successfully exported remix data to public/${project}.remix`);
+} catch (error) {
+  console.error("Failed to export remix data:", error.message);
+  process.exit(1);
+}
