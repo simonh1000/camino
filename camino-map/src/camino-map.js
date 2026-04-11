@@ -3,76 +3,76 @@
 // init choreogrphy inspired by good map
 let initCalled;
 const callbackPromise = new Promise((r) => (window.__initMap = r));
-const styles = [
-    {
-        featureType: "administrative.land_parcel",
-        stylers: [
-            {
-                visibility: "off",
-            },
-        ],
-    },
-    {
-        featureType: "administrative.neighborhood",
-        stylers: [
-            {
-                visibility: "off",
-            },
-        ],
-    },
-    {
-        featureType: "poi",
-        elementType: "labels.text",
-        stylers: [
-            {
-                visibility: "off",
-            },
-        ],
-    },
-    {
-        featureType: "road",
-        elementType: "labels",
-        stylers: [
-            {
-                visibility: "off",
-            },
-        ],
-    },
-    {
-        featureType: "road.arterial",
-        stylers: [
-            {
-                visibility: "off",
-            },
-        ],
-    },
-    {
-        featureType: "road.highway",
-        elementType: "labels",
-        stylers: [
-            {
-                visibility: "off",
-            },
-        ],
-    },
-    {
-        featureType: "road.local",
-        stylers: [
-            {
-                visibility: "off",
-            },
-        ],
-    },
-    {
-        featureType: "water",
-        elementType: "labels.text",
-        stylers: [
-            {
-                visibility: "off",
-            },
-        ],
-    },
-];
+// const styles = [
+//     {
+//         featureType: "administrative.land_parcel",
+//         stylers: [
+//             {
+//                 visibility: "off",
+//             },
+//         ],
+//     },
+//     {
+//         featureType: "administrative.neighborhood",
+//         stylers: [
+//             {
+//                 visibility: "off",
+//             },
+//         ],
+//     },
+//     {
+//         featureType: "poi",
+//         elementType: "labels.text",
+//         stylers: [
+//             {
+//                 visibility: "off",
+//             },
+//         ],
+//     },
+//     {
+//         featureType: "road",
+//         elementType: "labels",
+//         stylers: [
+//             {
+//                 visibility: "off",
+//             },
+//         ],
+//     },
+//     {
+//         featureType: "road.arterial",
+//         stylers: [
+//             {
+//                 visibility: "off",
+//             },
+//         ],
+//     },
+//     {
+//         featureType: "road.highway",
+//         elementType: "labels",
+//         stylers: [
+//             {
+//                 visibility: "off",
+//             },
+//         ],
+//     },
+//     {
+//         featureType: "road.local",
+//         stylers: [
+//             {
+//                 visibility: "off",
+//             },
+//         ],
+//     },
+//     {
+//         featureType: "water",
+//         elementType: "labels.text",
+//         stylers: [
+//             {
+//                 visibility: "off",
+//             },
+//         ],
+//     },
+// ];
 
 function loadGoogleMaps(apiKey) {
     if (!initCalled) {
@@ -80,7 +80,8 @@ function loadGoogleMaps(apiKey) {
         script.src =
             "https://maps.googleapis.com/maps/api/js?" +
             (apiKey ? `key=${apiKey}&` : "") +
-            "callback=__initMap&libraries=marker";
+            "loading=async&callback=__initMap&libraries=marker";
+        script.async = true;
         document.head.appendChild(script);
         initCalled = true;
     }
@@ -187,11 +188,11 @@ class MapIcon extends HTMLElement {
             } else if (this.googleLoaded) {
                 const options = {
                     ...this.mapOptions,
-                    mapId: "41ba66a00dbff00d",
+                    mapId: "e85cf0b0c36b17335efa1647",
                 };
                 // console.log(options);
                 this.map = new google.maps.Map(this, options);
-                this.map.setOptions({ styles: styles });
+                // this.map.setOptions({ styles: styles });
 
                 google.maps.event.addListenerOnce(this.map, "idle", () => {
                     this.attachMarkers();
@@ -238,7 +239,7 @@ class MapIcon extends HTMLElement {
         let base = {};
         if (pos.options) {
             const pin = new google.maps.marker.PinElement(pos.options);
-            base = { content: pin.element };
+            base = { content: pin };
         }
 
         const marker = new google.maps.marker.AdvancedMarkerElement({
@@ -248,12 +249,12 @@ class MapIcon extends HTMLElement {
         });
         // <gmp-advanced-marker>: Please use addEventListener('gmp-click', ...)
         marker.addListener(
-            "click",
+            "gmp-click",
             ((detail) => {
                 this.dispatchEvent(
-                    new CustomEvent("marker-clicked", { detail })
+                    new CustomEvent("marker-clicked", { detail }),
                 );
-            }).bind(this, pos)
+            }).bind(this, pos),
         );
         return marker;
     }
@@ -278,4 +279,4 @@ class MapIcon extends HTMLElement {
     }
 }
 
-customElements.define("rmx-map-icon", MapIcon);
+customElements.define("camino-map", MapIcon);

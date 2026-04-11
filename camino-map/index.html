@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>rmx-map-icon test harness</title>
+        <title>WebComp test harness</title>
         <!-- dev ts entry (comment out when using prod entry (npm run watch)) -->
-        <script type="module" src="./src/rmx-map-icon.js"></script>
+        <script type="module" src="./src/camino-map.js"></script>
         <!-- production js entry (comment out when using dev entry) -->
         <!--        <script src="./dist/rmx-map-icon.js"></script>-->
         <style>
-            rmx-map-icon {
+            camino-map {
                 display: block;
                 width: 500px;
                 height: 400px;
@@ -16,16 +16,16 @@
         </style>
     </head>
     <body>
-        <rmx-map-icon
+        <camino-map
             api-key="%VITE_GAPI_KEY%"
             center='{"lat":39.47228,"lng":-0.364284}'
             zoom="14"
             count="2"
-        ></rmx-map-icon>
+        ></camino-map>
         <button id="test" test>Add markers</button>
 
         <script>
-            const map = document.querySelector("rmx-map-icon");
+            const map = document.querySelector("camino-map");
             let markers = [
                 {
                     meta: "centre",
@@ -58,7 +58,7 @@
             map.setAttribute("markers", JSON.stringify(markers));
 
             map.addEventListener("marker-clicked", (evt) =>
-                console.log(evt.detail)
+                console.log(evt.detail),
             );
 
             document.querySelector("#test").addEventListener("click", () => {

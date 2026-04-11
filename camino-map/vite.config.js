@@ -11,9 +11,9 @@ export default defineConfig((env) => {
             outDir: "dist",
             emptyOutDir: true,
             lib: {
-                entry: "src/rmx-map-icon.js",
+                entry: "src/camino-map.js",
                 formats: ["iife"],
-                name: "rmx-map-icon.js",
+                name: "camino-map.js",
             },
             rollupOptions: {
                 output: {
@@ -29,7 +29,6 @@ export default defineConfig((env) => {
         },
         server: {
             host: "localhost",
-            port: 3100,
             cors: true,
             open: "index.html",
         },
